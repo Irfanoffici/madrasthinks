@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
           opacity: [0, 1],
           filter: ['blur(10px)', 'blur(0px)'],
           translateY: [20, 0],
+          delay: anime.stagger(250),
           duration: 1500,
           easing: 'easeOutCubic'
         });
@@ -148,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
       card.addEventListener('click', () => {
         if (modalBody && appleModal) {
           modalBody.innerHTML = `
-            <img src="${item.image}" style="width: 100%; height: 350px; object-fit: cover; border-bottom: 1px solid rgba(255,255,255,0.1);" />
+            <img src="${item.image}" style="width: 100%; height: 350px; object-fit: cover; border-bottom: 2px solid #6C4CFF;" />
             <div style="padding: 3rem;">
-              <h3 style="font-family: 'Inter', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.03em;">${item.title}</h3>
-              <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #BBBBBB; max-width: 600px; font-weight: 300;">
-                <strong style="color: #8a7cff; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">[ SYSTEM_LOG ]</strong> <br><br>
+              <h3 style="font-family: 'Inter', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; color: #111; margin-bottom: 2rem; letter-spacing: -0.05em;">${item.title}</h3>
+              <p style="font-family: 'Courier New', monospace; font-size: 1.2rem; line-height: 1.6; color: #666; max-width: 600px;">
+                <strong style="color: #222;">SYSTEM_LOG //</strong> <br><br>
                 ${item.text}
               </p>
             </div>

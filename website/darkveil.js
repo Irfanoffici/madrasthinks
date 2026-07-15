@@ -73,70 +73,71 @@ void main(){
 `;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('darkveil-container');
-  if (!container) return;
+  const containers = document.querySelectorAll('.darkveil-container, #darkveil-container');
   
-  // Create canvas
-  const canvas = document.createElement('canvas');
-  canvas.classList.add('darkveil-canvas');
-  container.appendChild(canvas);
+  containers.forEach(container => {
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    canvas.classList.add('darkveil-canvas');
+    container.appendChild(canvas);
 
-  // Default configuration
-  const hueShift = 0;
-  const noiseIntensity = 0;
-  const scanlineIntensity = 0;
-  const speed = 0.5;
-  const scanlineFrequency = 0;
-  const warpAmount = 0;
-  const resolutionScale = 1;
+    // Default configuration
+    const hueShift = 0;
+    const noiseIntensity = 0;
+    const scanlineIntensity = 0;
+    const speed = 0.5;
+    const scanlineFrequency = 0;
+    const warpAmount = 0;
+    const resolutionScale = 1;
 
-  const renderer = new Renderer({
-    dpr: Math.min(window.devicePixelRatio, 2),
-    canvas
+    const renderer = new Renderer({
+      dpr: Math.min(window.devicePixelRatio, 2),
+      canvas
+    });
+
+    const gl = renderer.gl;
+    const geometry = new Triangle(gl);
+
+    const program = new Program(gl, {
+      vertex,
+      fragment,
+      uniforms: {
+        uTime: { value: 0 },
+        uResolution: { value: new Vec2() },
+        uHueShift: { value: hueShift },
+        uNoise: { value: noiseIntensity },
+        uScan: { value: scanlineIntensity },
+        uScanFreq: { value: scanlineFrequency },
+        uWarp: { value: warpAmount }
+      }
+    });
+
+    const mesh = new Mesh(gl, { geometry, program });
+
+    const resize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      renderer.setSize(w * resolutionScale, h * resolutionScale);
+      program.uniforms.uResolution.value.set(w, h);
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    const start = performance.now();
+    let frame = 0;
+
+    const loop = () => {
+      program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
+      program.uniforms.uHueShift.value = hueShift;
+      program.uniforms.uNoise.value = noiseIntensity;
+      program.uniforms.uScan.value = scanlineIntensity;
+      program.uniforms.uScanFreq.value = scanlineFrequency;
+      program.uniforms.uWarp.value = warpAmount;
+      renderer.render({ scene: mesh });
+      frame = requestAnimationFrame(loop);
+    };
+
+    loop();
   });
-
-  const gl = renderer.gl;
-  const geometry = new Triangle(gl);
-
-  const program = new Program(gl, {
-    vertex,
-    fragment,
-    uniforms: {
-      uTime: { value: 0 },
-      uResolution: { value: new Vec2() },
-      uHueShift: { value: hueShift },
-      uNoise: { value: noiseIntensity },
-      uScan: { value: scanlineIntensity },
-      uScanFreq: { value: scanlineFrequency },
-      uWarp: { value: warpAmount }
-    }
-  });
-
-  const mesh = new Mesh(gl, { geometry, program });
-
-  const resize = () => {
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    renderer.setSize(w * resolutionScale, h * resolutionScale);
-    program.uniforms.uResolution.value.set(w, h);
-  };
-
-  window.addEventListener('resize', resize);
-  resize();
-
-  const start = performance.now();
-  let frame = 0;
-
-  const loop = () => {
-    program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
-    program.uniforms.uHueShift.value = hueShift;
-    program.uniforms.uNoise.value = noiseIntensity;
-    program.uniforms.uScan.value = scanlineIntensity;
-    program.uniforms.uScanFreq.value = scanlineFrequency;
-    program.uniforms.uWarp.value = warpAmount;
-    renderer.render({ scene: mesh });
-    frame = requestAnimationFrame(loop);
-  };
-
-  loop();
 });

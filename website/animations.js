@@ -68,11 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
           document.body.style.overflow = 'auto';
 
           // Initialize Grainient here to avoid rendering under splash
-          const darkveilContainer = document.getElementById('darkveil-container');
-          if (darkveilContainer) {
+          const darkveilContainers = document.querySelectorAll('.darkveil-container, #darkveil-container');
+          darkveilContainers.forEach(container => {
             // Remove any legacy CSS backgrounds
-            darkveilContainer.style.background = 'none';
-            new Grainient(darkveilContainer, {
+            container.style.background = 'none';
+            new Grainient(container, {
               color1: '#0a0a0a',
               color2: '#1e1b4b',
               color3: '#0a0a0a',
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
               blendSoftness: 0.2,
               contrast: 1.2
             });
-          }
+          });
         }
       });
     }, 2200); // Wait for intro to finish

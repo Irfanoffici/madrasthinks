@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MadrasThinks | The Founders' Factory</title>
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script type="module" src="./animations.js" defer></script>
+  <script type="module" src="./darkveil.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./gradual-blur.css" />
+</head>
+
+<body>
+  <!-- Splash Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <div class="s-shape s-pill s-pill-tl"></div>
+      <div class="s-shape s-svg s-diag-l">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <line x1="20" y1="80" x2="80" y2="20" />
+          <line x1="20" y1="50" x2="50" y2="20" />
+          <line x1="50" y1="80" x2="80" y2="50" />
+        </svg>
+      </div>
+      <div class="s-shape s-svg s-squig-l">
+        <svg viewBox="0 0 140 40" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <path d="M 10 25 C 25 5, 35 5, 50 25 S 75 45, 90 25 S 115 5, 130 25" />
+        </svg>
+      </div>
+      <div class="s-shape s-circle s-circle-l"></div>
+      <div class="s-shape s-pill s-pill-tc"></div>
+      <div class="s-shape s-circle s-circle-r"></div>
+      <div class="s-shape s-svg s-squig-r">
+        <svg viewBox="0 0 140 40" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <path d="M 10 25 C 25 5, 35 5, 50 25 S 75 45, 90 25 S 115 5, 130 25" />
+        </svg>
+      </div>
+      <div class="s-shape s-svg s-diag-r">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <line x1="20" y1="20" x2="80" y2="80" />
+          <line x1="50" y1="20" x2="80" y2="50" />
+          <line x1="20" y1="50" x2="50" y2="80" />
+        </svg>
+      </div>
+      <div class="s-shape s-pill s-pill-tr"></div>
+      <div class="s-shape s-dome s-dome-bl"></div>
+      <div class="s-shape s-dome s-dome-br"></div>
+      <h1 class="splash-logo">MadrasThinks</h1>
+    </div>
+  </div>
+  <!-- Subtle Grid Background overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- SVG Filters for Goo Effect -->
+  <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg"
+    version="1.1">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Floating Dock Navigation (Uiverse Style) -->
+  <nav class="menu">
+    <a href="#hero" class="active">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path
+          d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z">
+        </path>
+        <path
+          d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z">
+        </path>
+      </svg>
+      <span>Hero</span>
+    </a>
+    <a href="#apple-cards-carousel">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd"
+          d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
+          clip-rule="evenodd"></path>
+      </svg>
+      <span>iSad</span>
+    </a>
+    <a href="#contact-info">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path
+          d="M17.004 10.407c.138.435-.216.842-.672.842h-3.465a.75.75 0 0 1-.65-.375l-1.732-3c-.229-.396-.053-.907.393-1.004a5.252 5.252 0 0 1 6.126 3.537ZM8.12 8.464c.307-.338.838-.235 1.066.16l1.732 3a.75.75 0 0 1 0 .75l-1.732 3c-.229.397-.76.5-1.067.161A5.23 5.23 0 0 1 6.75 12a5.23 5.23 0 0 1 1.37-3.536ZM10.878 17.13c-.447-.098-.623-.608-.394-1.004l1.733-3.002a.75.75 0 0 1 .65-.375h3.465c.457 0 .81.407.672.842a5.252 5.252 0 0 1-6.126 3.539Z">
+        </path>
+        <path fill-rule="evenodd"
+          d="M21 12.75a.75.75 0 1 0 0-1.5h-.783a8.22 8.22 0 0 0-.237-1.357l.734-.267a.75.75 0 1 0-.513-1.41l-.735.268a8.24 8.24 0 0 0-.689-1.192l.6-.503a.75.75 0 1 0-.964-1.149l-.6.504a8.3 8.3 0 0 0-1.054-.885l.391-.678a.75.75 0 1 0-1.299-.75l-.39.676a8.188 8.188 0 0 0-1.295-.47l.136-.77a.75.75 0 0 0-1.477-.26l-.136.77a8.36 8.36 0 0 0-1.377 0l-.136-.77a.75.75 0 1 0-1.477.26l.136.77c-.448.121-.88.28-1.294.47l-.39-.676a.75.75 0 0 0-1.3.75l.392.678a8.29 8.29 0 0 0-1.054.885l-.6-.504a.75.75 0 1 0-.965 1.149l.6.503a8.243 8.243 0 0 0-.689 1.192L3.8 8.216a.75.75 0 1 0-.513 1.41l.735.267a8.222 8.222 0 0 0-.238 1.356h-.783a.75.75 0 0 0 0 1.5h.783c.042.464.122.917.238 1.356l-.735.268a.75.75 0 0 0 .513 1.41l.735-.268c.197.417.428.816.69 1.191l-.6.504a.75.75 0 0 0 .963 1.15l.601-.505c.326.323.679.62 1.054.885l-.392.68a.75.75 0 0 0 1.3.75l.39-.679c.414.192.847.35 1.294.471l-.136.77a.75.75 0 0 0 1.477.261l.137-.772a8.332 8.332 0 0 0 1.376 0l.136.772a.75.75 0 1 0 1.477-.26l-.136-.771a8.19 8.19 0 0 0 1.294-.47l.391.677a.75.75 0 0 0 1.3-.75l-.393-.679a8.29 8.29 0 0 0 1.054-.885l.601.504a.75.75 0 0 0 .964-1.15l-.6-.503c.261-.375.492-.774.69-1.191l.735.267a.75.75 0 1 0 .512-1.41l-.734-.267c.115-.439.195-.892.237-1.356h.784Zm-2.657-3.06a6.744 6.744 0 0 0-1.19-2.053 6.784 6.784 0 0 0-1.82-1.51A6.705 6.705 0 0 0 12 5.25a6.8 6.8 0 0 0-1.225.11 6.7 6.7 0 0 0-2.15.793 6.784 6.784 0 0 0-2.952 3.489.76.76 0 0 1-.036.098A6.74 6.74 0 0 0 5.251 12a6.74 6.74 0 0 0 3.366 5.842l.009.005a6.704 6.704 0 0 0 2.18.798l.022.003a6.792 6.792 0 0 0 2.368-.004 6.704 6.704 0 0 0 2.205-.811 6.785 6.785 0 0 0 1.762-1.484l.009-.01.009-.01a6.743 6.743 0 0 0 1.18-2.066c.253-.707.39-1.469.39-2.263a6.74 6.74 0 0 0-.408-2.309Z"
+          clip-rule="evenodd"></path>
+      </svg>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section (Anime.js Network) -->
+    <header id="hero" class="wembi-section wembi-hero" style="min-height: 85vh;">
+      <div class="bg-animated" id="darkveil-container"
+        style="position: absolute; inset: 0; z-index: 0; overflow: hidden;">
+      </div>
+
+      <div class="wembi-hero-logo">
+        <h1 class="wembi-massive-title hero-text-reveal">MadrasThinks</h1>
+      </div>
+
+      <div class="wembi-hero-content">
+        <div class="wembi-mini-t">
+          <span class="wembi-index">Founders' Factory</span>
+          <span class="wembi-subtitle">Built by Students of MEC</span>
+        </div>
+        <div class="wembi-hero-text">
+          <div class="wembi-bullets">
+            <span class="w-bullet"></span><span class="w-bullet"></span>
+          </div>
+          We are India's young minds, solving problems and giving scalable products as solutions.
+        </div>
+      </div>
+    </header>
+
+    <!-- Chapter 01 — ORIGIN: Stark Typography -->
+    <section id="origin" class="wembi-section brutal-stark-dark" style="min-height: 85vh;">
+      <div class="card-content-wrapper center-content">
+        <div class="stark-grid-overlay"></div>
+        <div class="stark-title-block">
+          <p class="stark-label">[ 01 — ORIGIN ]</p>
+          <h2 class="stark-massive-text">WE ARE THE<br>FOUNDERS' FACTORY</h2>
+          <p class="stark-subtext">Building enterprise trust through uncompromised engineering.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 02 — PRINCIPLES: Brutal Grid -->
+    <section id="principles" class="wembi-section brutal-stark-light" style="min-height: 85vh; padding: 0;">
+      <div class="card-content-wrapper" style="padding: 0;">
+        <div class="stark-grid-container">
+          <div class="stark-grid-item">
+            <div class="stark-num">01</div>
+            <div class="stark-content">
+              <h3>SOLVE<br>DEEPLY</h3>
+              <p>We do not scratch the surface. We engineer from the protocol level up.</p>
+            </div>
+          </div>
+          <div class="stark-grid-item">
+            <div class="stark-num">02</div>
+            <div class="stark-content">
+              <h3>SCALE<br>RESPONSIBLY</h3>
+              <p>Built for billion-dollar flow. Built for the modern enterprise.</p>
+            </div>
+          </div>
+          <div class="stark-grid-item">
+            <div class="stark-num">03</div>
+            <div class="stark-content">
+              <h3>BUILD<br>TRUST</h3>
+              <p>Loyalty engineered at the core. Unbreakable systems.</p>
+            </div>
+          </div>
+          <div class="stark-grid-item">
+            <div class="stark-num">04</div>
+            <div class="stark-content">
+              <h3>ENGINEER<br>EVERYTHING</h3>
+              <p>No decoration. Pure function. Relentless innovation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 03 — CRAFT: Split Contrast -->
+    <section id="craft" class="wembi-section brutal-split-section" style="min-height: 85vh; padding: 0;">
+      <div class="stark-split left-dark">
+        <div class="split-content">
+          <p class="stark-label">[ 03 — CRAFT ]</p>
+          <h2>SCALABLE<br>TECHNOLOGIES</h2>
+          <p>For the modern enterprise.</p>
+        </div>
+      </div>
+      <div class="stark-split right-light">
+        <div class="split-content">
+          <h2>BILLION<br>DOLLAR<br>TRANSACTIONS</h2>
+          <p class="stark-mono">>> SYS.READY</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 04 — SYSTEMS: Stark Marquee -->
+    <section id="systems" class="wembi-section brutal-stark-light" style="min-height: 85vh; padding: 0; overflow: hidden; display: flex; align-items: center;">
+      <div class="stark-marquee-container">
+        <div class="stark-marquee-track">
+          <span>UNITING.AI</span><span class="sep">//</span>
+          <span>SUPERCAMPUS</span><span class="sep">//</span>
+          <span>CAMPUSONE</span><span class="sep">//</span>
+          <span>UNITING.AI</span><span class="sep">//</span>
+          <span>SUPERCAMPUS</span><span class="sep">//</span>
+          <span>CAMPUSONE</span><span class="sep">//</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 05 — LAB: Data Table -->
+    <section id="lab" class="wembi-section brutal-stark-dark" style="min-height: 85vh;">
+      <div class="card-content-wrapper center-content">
+        <div class="stark-table-wrapper">
+          <div class="stark-table-header">
+            <span>ID</span><span>INITIATIVE</span><span>STATUS</span>
+          </div>
+          <div class="stark-table-row">
+            <span>001</span><span>Enterprise AI Solutions</span><span class="status-running">[ RUNNING ]</span>
+          </div>
+          <div class="stark-table-row">
+            <span>002</span><span>Scalable Architecture</span><span class="status-prot">[ PROTOTYPE ]</span>
+          </div>
+          <div class="stark-table-row">
+            <span>003</span><span>Trust Protocols</span><span class="status-exp">[ EXPERIMENT ]</span>
+          </div>
+          <div class="stark-table-row">
+            <span>004</span><span>Future Tech</span><span class="status-res">[ RESEARCH ]</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 06 — LAYERS: Brutal Hierarchy -->
+    <section id="layers" class="wembi-section brutal-stark-light" style="min-height: 85vh;">
+      <div class="card-content-wrapper center-content">
+        <div class="stark-layers-container">
+          <div class="stark-flat-layer" style="width: 100%; z-index: 1;">
+            <div class="layer-num">L1</div>
+            <div class="layer-name">CLIENT TRUST</div>
+          </div>
+          <div class="stark-flat-layer" style="width: 85%; z-index: 2; margin-top: -2rem;">
+            <div class="layer-num">L2</div>
+            <div class="layer-name">ENTERPRISE LOGIC</div>
+          </div>
+          <div class="stark-flat-layer" style="width: 70%; z-index: 3; margin-top: -2rem;">
+            <div class="layer-num">L3</div>
+            <div class="layer-name">SCALABLE ARCHITECTURE</div>
+          </div>
+          <div class="stark-flat-layer" style="width: 55%; z-index: 4; margin-top: -2rem;">
+            <div class="layer-num">L4</div>
+            <div class="layer-name">CLOUD INFRASTRUCTURE</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 07 — TOMORROW: The Horizon Line -->
+    <section id="tomorrow" class="chapter chapter--tomorrow">
+      <div class="chapter-inner">
+        <div class="chapter-label">07 — TOMORROW</div>
+        <div class="horizon-wrapper">
+          <div class="horizon-particle-stream"></div>
+          <div class="horizon-line"></div>
+          <div class="horizon-items">
+            <div class="horizon-node">
+              <span class="horizon-year">NOW</span>
+              <span class="horizon-stem"></span>
+              <span class="horizon-direction">IT Solutions</span>
+            </div>
+            <div class="horizon-node">
+              <span class="horizon-year">NEXT</span>
+              <span class="horizon-stem"></span>
+              <span class="horizon-direction">Global Scale</span>
+            </div>
+            <div class="horizon-node">
+              <span class="horizon-year">BEYOND</span>
+              <span class="horizon-stem"></span>
+              <span class="horizon-direction">Billion-Dollar Trust</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 08 — WORK: The Marquee Wall -->
+    <section id="work" class="chapter chapter--work">
+      <div class="chapter-label work-label">08 — WORK</div>
+      <div class="marquee-spotlight"></div>
+      <div class="marquee-wall">
+        <div class="marquee-row marquee-row--ltr">
+          <div class="marquee-track marquee-track--ltr">
+            <span class="marquee-word">Trust</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Scale</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Enterprise</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Innovators</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Loyalty</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Architecture</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Solutions</span><span class="marquee-sep">·</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-word">Trust</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Scale</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Enterprise</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Innovators</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Loyalty</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Architecture</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Solutions</span><span class="marquee-sep">·</span>
+          </div>
+        </div>
+        <div class="marquee-row marquee-row--rtl">
+          <div class="marquee-track marquee-track--rtl">
+            <span class="marquee-word">Solutions</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Architecture</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Loyalty</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Innovators</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Enterprise</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Scale</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Trust</span><span class="marquee-sep">·</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-word">Solutions</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Architecture</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Loyalty</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Innovators</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Enterprise</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Scale</span><span class="marquee-sep">·</span>
+            <span class="marquee-word">Trust</span><span class="marquee-sep">·</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 09 — SIGNAL: The Statement -->
+    <section id="signal" class="chapter chapter--signal">
+      <div class="signal-inner">
+        <div class="chapter-label">09 — SIGNAL</div>
+        <p class="signal-line signal-line--gray signal-fog">We are the Founders' Factory.</p>
+        <div class="signal-divider signal-fog"></div>
+        <p class="signal-line signal-line--purple signal-fog">We build enterprise trust.</p>
+      </div>
+    </section>
+
+
+    <!-- Section: Apple Cards Carousel -->
+    <section id="apple-cards-carousel" class="wembi-section wembi-dark-card"
+      style="position: relative; overflow: hidden; padding: 4rem 0; display: flex; flex-direction: column;">
+      <div class="card-bg-mesh isad-mesh"></div>
+      
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; width: 100%;">
+        <h2 class="wembi-section-title" style="color: #FFFFFF; font-size: 3rem; margin-bottom: 2rem;">
+          Get to know your iSad.
+        </h2>
+      </div>
+
+      <div class="apple-carousel-wrapper" id="apple-carousel-wrapper" style="position: relative; z-index: 2; width: 100%;">
+        <div class="apple-carousel-track" id="apple-carousel-track">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Apple Cards Modal -->
+    <div id="apple-carousel-modal" class="apple-carousel-modal">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-content-wrapper">
+        <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- Headquarters -->
+  <section id="contact-info" class="wembi-section hq-section"
+    style="display:flex; justify-content:center; align-items:center; min-height: 50vh; position: relative;">
+    
+    <div id="beams-container" style="position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; border-radius: inherit;"></div>
+    
+    <div class="commitment-wrapper"
+        style="position:relative; z-index:10; text-align:center; display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 600px; padding: 2rem;">
+
+        <!-- Elegant subtle badge -->
+        <div
+          style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 99px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;">
+          <div style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff; opacity: 0.7;"></div>
+          <span style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #a1a1aa;">Global
+            Reach</span>
+        </div>
+
+        <h2 class="wembi-section-title" style="margin-bottom: 1.5rem; color: #ffffff;">Headquarters</h2>
+
+        <p class="philosophy-sub"
+          style="font-family: var(--font-stack); text-align: center; font-size: 1.1rem; line-height: 1.8; color: #a1a1aa;">
+          <strong style="color: #ffffff; font-weight: 500;">Madras Engineering College | MadrasThinks</strong><br><br>
+          Tambaram Road, Vellarai<br>
+          Chennai Metropolitan Area<br>
+          Sriperumbudur Taluk, Tamil Nadu 602105
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pre-Footer Massive Brand Text -->
+  <div class="pre-footer-wrapper">
+    <div class="pre-footer-brand">
+      <h2 class="massive-text">MadrasThinks<sup>&reg;</sup></h2>
+    </div>
+  </div>
+
+  <!-- Footer Full Bleed -->
+  <footer id="contact" class="rescale-footer">
+    <div class="footer-top-dot"></div>
+    <div class="footer-blob"></div>
+
+    <div class="footer-content layout-grid">
+      <div class="footer-left">
+        <h3 class="footer-logo">MadrasThinks<sup>&reg;</sup></h3>
+        <p class="footer-tagline">Advanced strategies with<br>India's Young minds</p>
+      </div>
+
+      <div class="footer-middle">
+        <h4 class="footer-heading">Stay in the Loop</h4>
+        <p class="footer-subheading">Be first to know what's next</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your Email" class="newsletter-input">
+          <button class="newsletter-submit">→</button>
+        </div>
+        <div class="social-links">
+          <a href="#">𝕏</a>
+          <a href="#">in</a>
+          <a href="#">IG</a>
+          <a href="#">YT</a>
+          <a href="#">Discord</a>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <div class="footer-link-col">
+          <a href="#">Home</a>
+          <a href="#">Features</a>
+          <a href="#">How It Works</a>
+          <a href="#">Integration</a>
+          <a href="#">Performance</a>
+          <a href="#">Pricing</a>
+          <a href="#">FAQ</a>
+        </div>
+        <div class="footer-link-col">
+          <a href="#">About us</a>
+          <a href="#">Client Insights</a>
+          <a href="#contact">Book a Call</a>
+          <a href="#">Journal</a>
+          <a href="#contact">Contact</a>
+          <a href="#">404</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">Copyright &copy; MadrasThinks 2026</p>
+      </div>
+    </div>
+  </footer>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
